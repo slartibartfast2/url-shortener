@@ -18,6 +18,7 @@ public class UrlService {
 
     private final UrlRepository urlRepository;
     private final UrlConverter urlConverter;
+    private final RequestCounterService requestCounterService;
 
     public String convertToShortUrl(LongUrlRequest request) {
         var url = new Url();
