@@ -1,6 +1,8 @@
 package ea.slartibartfast2.urlshortener.controller;
 
+import ea.slartibartfast2.urlshortener.configuration.annotation.RateLimiter;
 import ea.slartibartfast2.urlshortener.configuration.annotation.RequestCounter;
+import ea.slartibartfast2.urlshortener.model.WindowTimeUnit;
 import ea.slartibartfast2.urlshortener.model.dto.LongUrlRequest;
 import ea.slartibartfast2.urlshortener.service.UrlService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +26,7 @@ public class UrlController {
     private final UrlService urlService;
 
     @Operation(method = "Create short url", description = "Converts long url to short url")
+    @RateLimiter(windowSize = 10, windowTimeUnit = WindowTimeUnit.MINUTE, limit = 10, operationName = "url-shortener")
     @RequestCounter(operationName = "url-shortener")
     @PostMapping("create-short")
     public String convertToShortUrl(@RequestBody LongUrlRequest request) {
